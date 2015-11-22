@@ -1,5 +1,6 @@
 package dmfmm.noki.multiplecamera;
 
+import dmfmm.RunicBridges.RunicBridges;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -41,24 +42,25 @@ public class MultipleCameraData {
 		
 
 		
-	}
-	
+	}*/
+	public static Block multipleCamera;
+	public static Item multipleViewer;
 	public static void registerBlocks() {
 		
-		multipleCamera = new BlockMultipleCamera(multipleCameraName, tab);
-		GameRegistry.registerBlock(multipleCamera, multipleCameraName);
-		GameRegistry.registerTileEntity(TileMultipleCamera.class, multipleCameraName);
+		multipleCamera = new BlockMultipleCamera("Camera", RunicBridges.tab);
+		GameRegistry.registerBlock(multipleCamera, "Camera");
+		GameRegistry.registerTileEntity(TileMultipleCamera.class, "Camera");
 
 		
 	}
 	
 	public static void registerItems() {
 		
-		multipleViewer = new ItemViewer(multipleViewerName, tab);
-		GameRegistry.registerItem(multipleViewer, multipleViewerName);
+		multipleViewer = new ItemViewer("viewer", RunicBridges.tab);
+		GameRegistry.registerItem(multipleViewer, "viewer");
 		
 	}
-	
+	/*
 	public static void registerRecipes() {
 				
 		GameRegistry.addRecipe(new ItemStack(multipleCamera, 1, 0),

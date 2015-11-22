@@ -153,7 +153,7 @@ public class TileMultipleCamera extends TileEntity {
 			this.createCamera();
 		}
 		//System.out.println("PITCH: " + this.offsetPitch);
-		System.out.println("YAW: " + this.offsetYAW);
+		//System.out.println("YAW: " + this.offsetYAW);
 	}
 		
 	@Override

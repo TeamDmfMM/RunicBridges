@@ -43,8 +43,8 @@ public class MultipleCameraCore {
 		//MultipleCameraData.getConfig(event);
 		//MultipleCameraPacketHandler.registerPre();
 		//MultipleCameraData.setModData(event);
-		//MultipleCameraData.registerBlocks();
-		//MultipleCameraData.registerItems();
+		MultipleCameraData.registerBlocks();
+		MultipleCameraData.registerItems();
 
 
 		PacketHandler.registerPackets();
