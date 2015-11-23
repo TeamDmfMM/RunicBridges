@@ -113,6 +113,9 @@ public class PacketCameraGetResponse implements IMessage {
 			buf.writeFloat(each.getValue().PITCHOFF);
 			buf.writeBoolean(each.getValue().isTurtle);
 			buf.writeInt(each.getValue().uuid.toString().length());
+
+
+
 			for (int i = 0; i < each.getValue().uuid.toString().length(); i++){
 				buf.writeChar(each.getValue().uuid.toString().charAt(i));
 			}
