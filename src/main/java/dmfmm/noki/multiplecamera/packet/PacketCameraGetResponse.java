@@ -1,19 +1,20 @@
 package dmfmm.noki.multiplecamera.packet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import dmfmm.noki.multiplecamera.MultipleCameraCore;
 import dmfmm.noki.multiplecamera.camera.CameraManagerClient;
 import dmfmm.noki.multiplecamera.camera.CameraManagerServer;
 import dmfmm.noki.multiplecamera.camera.EntityCamera;
 import io.netty.buffer.ByteBuf;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 
 /**********
@@ -55,6 +56,12 @@ public class PacketCameraGetResponse implements IMessage {
 			float YAWOFF = buf.readFloat();
 			float PITHCOFF = buf.readFloat();
 			boolean isTurtle = buf.readBoolean();
+			int length = buf.readInt();
+			StringBuilder s = new StringBuilder();
+			for (int j = 0; j <length; j++){
+				s.append(buf.readChar());
+			}
+			UUID uuid = UUID.fromString(s.toString());
 			int id = buf.readInt();
 			
 			World world = MultipleCameraCore.proxy.getClientWorld();
@@ -77,7 +84,7 @@ public class PacketCameraGetResponse implements IMessage {
 				continue;
 			}*/
 			
-			this.cameras.put(id, new EntityCamera(world, posX, posY, posZ, yaw, pitch, YAWOFF, PITHCOFF, null, isTurtle));
+			this.cameras.put(id, new EntityCamera(world, posX, posY, posZ, yaw, pitch, YAWOFF, PITHCOFF, uuid, isTurtle));
 		}
 		
 		this.orderedCameras = new ArrayList<EntityCamera>(this.cameras.values());
@@ -94,6 +101,7 @@ public class PacketCameraGetResponse implements IMessage {
 		buf.writeInt(cameras.size());
 		MultipleCameraCore.log("camera size is %s.", cameras.size());
 		for(Map.Entry<Integer, EntityCamera> each: cameras.entrySet()) {
+
 			buf.writeInt(each.getValue().worldObj.provider.dimensionId);
 			MultipleCameraCore.log("dimensionId, toBytes() is %s.", each.getValue().worldObj.provider.dimensionId);
 			buf.writeDouble(each.getValue().posX);
@@ -104,7 +112,12 @@ public class PacketCameraGetResponse implements IMessage {
 			buf.writeFloat(each.getValue().YAWOFF);
 			buf.writeFloat(each.getValue().PITCHOFF);
 			buf.writeBoolean(each.getValue().isTurtle);
+			buf.writeInt(each.getValue().uuid.toString().length());
+			for (int i = 0; i < each.getValue().uuid.toString().length(); i++){
+				buf.writeChar(each.getValue().uuid.toString().charAt(i));
+			}
 			buf.writeInt(each.getKey());
+
 		}
 		
 	}

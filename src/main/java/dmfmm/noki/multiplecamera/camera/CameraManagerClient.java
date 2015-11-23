@@ -1,12 +1,12 @@
 package dmfmm.noki.multiplecamera.camera;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import dmfmm.noki.multiplecamera.MultipleCameraCore;
 import dmfmm.noki.multiplecamera.event.EventRenderScreen;
 import dmfmm.noki.multiplecamera.packet.PacketCameraGet;
 import dmfmm.noki.multiplecamera.packet.PacketHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +66,14 @@ public class CameraManagerClient {
 	
 	public static void setOrderedClientCameras(ArrayList<EntityCamera> cameras) {
 		
-		orderedClientCameras = cameras;
+		ArrayList<EntityCamera> newa = new ArrayList<>();
+		for (EntityCamera c : cameras){
+			if (c.uuid.equals(Minecraft.getMinecraft().thePlayer.getPersistentID())){
+				continue;
+			}
+			newa.add(c);
+		}
+		orderedClientCameras = (ArrayList<EntityCamera>) newa.clone();
 		
 	}
 	

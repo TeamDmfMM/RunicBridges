@@ -106,12 +106,13 @@ public class BlockMultipleCamera extends BlockContainer {
 		if(tile == null || !(tile instanceof TileMultipleCamera)) {
 			return;
 		}
-		((TileMultipleCamera)tile).resetCameraInfo();
+
 		
 		if(!(entity instanceof EntityPlayer)) {
 			return;
 		}
-		((TileMultipleCamera)tile).setUuid(((EntityPlayer)entity).getPersistentID());;
+		((TileMultipleCamera)tile).setUuid(((EntityPlayer)entity).getPersistentID());
+		((TileMultipleCamera)tile).resetCameraInfo();
 //		world.markBlockForUpdate(x, y, z);
 		
 	}
